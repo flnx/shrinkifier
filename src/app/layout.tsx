@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
+import '@/styles/globals.css';
 import { Inter as FontSans } from 'next/font/google';
 import { cn } from '@/lib/utils';
+import { ThemeProvider } from './providers';
+import { Nav } from '@/components/Nav';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -28,7 +29,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontSans.variable
         )}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+        >
+          <Nav />
+          <main>{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );
