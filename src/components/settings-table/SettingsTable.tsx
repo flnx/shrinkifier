@@ -35,8 +35,8 @@ export function SettingsTable() {
         <TableRow>
           <TableHead className="w-[100px]">Image</TableHead>
           <TableHead>Format</TableHead>
-          <TableHead>Format</TableHead>
-          {/* <TableHead className="text-right">Amount</TableHead> */}
+          {/* <TableHead colSpan={4}>Reduced</TableHead> */}
+          {/* <TableHead className="text-right" colSpan={3}>Amount</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -60,8 +60,10 @@ export function SettingsTable() {
                 PNG
               </span>
             </TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell className="text-right">Download</TableCell>
+            <TableCell className="font-bold text-center">-50%</TableCell>
+            <TableCell className="text-right w-[90px]">
+              <div>Download</div>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
