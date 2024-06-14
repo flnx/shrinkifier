@@ -9,25 +9,17 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-const invoices = [
-  {
-    invoice: 'INV001',
-    paymentStatus: 'Completed',
-    paymentMethod: 'JPG',
-  },
-  {
-    invoice: 'INV002',
-    paymentStatus: 'In progress',
-    paymentMethod: 'JPG',
-  },
-  {
-    invoice: 'INV003',
-    paymentStatus: 'In progress',
-    paymentMethod: 'PNG',
-  },
-];
+type SettingsTableProps = {
+  imagesData: {
+    url: string;
+    size: string;
+    name: string;
+    type: string;
+  }[];
+  convertTo?: string;
+};
 
-export function SettingsTable() {
+export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
   return (
     <Table>
       <TableCaption>Selected images</TableCaption>
@@ -35,16 +27,14 @@ export function SettingsTable() {
         <TableRow>
           <TableHead className="w-[100px]">Image</TableHead>
           <TableHead>Format</TableHead>
-          {/* <TableHead colSpan={4}>Reduced</TableHead> */}
-          {/* <TableHead className="text-right" colSpan={3}>Amount</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
+        {imagesData.map((image, i) => (
+          <TableRow key={image.url + i}>
             <TableCell className="font-medium">
               <img
-                src="https://i.pravatar.cc/50"
+                src={image.url}
                 alt="test"
                 className="h-[50px] w-[50x] object-cover rounded-sm"
                 width={50}
@@ -53,12 +43,16 @@ export function SettingsTable() {
             </TableCell>
             <TableCell>
               <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
-                JPG
+                {image.type}
               </span>
-              <span className="font-extralight">{' > '}</span>
-              <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
-                PNG
-              </span>
+              {convertTo && (
+                <>
+                  <span className="font-extralight">{' > '}</span>
+                  <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
+                    {convertTo}
+                  </span>
+                </>
+              )}
             </TableCell>
             <TableCell className="font-bold text-center">-50%</TableCell>
             <TableCell className="text-right w-[90px]">

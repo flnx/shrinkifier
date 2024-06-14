@@ -11,24 +11,19 @@ export default function Home() {
     setFiles((prevFiles) => [...prevFiles, ...files]);
   };
 
-  const imageUrls = useMemo(() => {
-    return files.map((f) => URL.createObjectURL(f));
+  const imagesData = useMemo(() => {
+    return files.map((f) => ({
+      url: URL.createObjectURL(f),
+      size: (f.size / 1024).toFixed(2),
+      name: f.name,
+      type: f.type.replace('image/', '').toUpperCase(),
+    }));
   }, [files]);
 
   return (
     <div className="container max-w-screen-lg mt-10 space-y-10">
       <DragAndDrop handleFiles={filesHandler} />
-      <SettingsTable />
-      {/* <div className="flex gap-2 mt-5">
-        {imageUrls.map((url, i) => (
-          <img
-            src={url}
-            alt="hi there"
-            className="w-[100px] h-100px rounded-xl"
-            key={url + i}
-          />
-        ))}
-      </div> */}
+      <SettingsTable imagesData={imagesData} />
     </div>
   );
 }
