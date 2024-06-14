@@ -1,6 +1,7 @@
 'use client';
 
 import { DragAndDrop } from '@/components/drag-and-drop/DragAndDrop';
+import { SettingsTable } from '@/components/settings-table/SettingsTable';
 import { useMemo, useState } from 'react';
 
 export default function Home() {
@@ -15,9 +16,10 @@ export default function Home() {
   }, [files]);
 
   return (
-    <div className="container max-w-screen-lg mt-10">
+    <div className="container max-w-screen-lg mt-10 space-y-10">
       <DragAndDrop handleFiles={filesHandler} />
-      <div className="flex gap-2 mt-5">
+      <SettingsTable />
+      {/* <div className="flex gap-2 mt-5">
         {imageUrls.map((url, i) => (
           <img
             src={url}
@@ -26,7 +28,7 @@ export default function Home() {
             key={url + i}
           />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
