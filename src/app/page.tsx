@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <div className="container max-w-screen-lg mt-10 space-y-10">
       <DragAndDrop handleFiles={filesHandler} />
-      <SettingsTable imagesData={imagesData} />
+      <SettingsTable imagesData={imagesData} convertTo={"WEBP"} />
     </div>
   );
 }
