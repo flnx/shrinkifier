@@ -9,15 +9,15 @@ import {
 } from '@/components/ui/table';
 import { Button } from '../ui/button';
 import { FileData, Format, Status } from '@/types/FileData';
+import { ProgressBar } from '@/components/progress-bar/ProgressBar';
 
 type SettingsTableProps = {
   imagesData: FileData[];
   convertTo: Format | null;
 };
 
-
 export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
-  console.log(imagesData[0])
+  console.log(imagesData[0]);
 
   return (
     <Table>
@@ -40,25 +40,28 @@ export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
               />
             </TableCell>
             <TableCell>
-              <div className="relative">
-                <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
-                  {fileData.type}
-                </span>
-                {convertTo && (
-                  <>
-                    <span className="font-extralight">{' > '}</span>
-                    <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
-                      {convertTo.toUpperCase()}
-                    </span>
-                  </>
-                )}
-                <span className="absolute -bottom-5 left-0 text-[11px] max-w-[160px] sm:max-w-sm truncate">
-                  {fileData.name}
-                </span>
+              <div className="relative flex items-center gap-12">
+                <div>
+                  <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
+                    {fileData.type}
+                  </span>
+                  {convertTo && (
+                    <>
+                      <span className="font-extralight">{' > '}</span>
+                      <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
+                        {convertTo.toUpperCase()}
+                      </span>
+                    </>
+                  )}
+                  <span className="absolute -bottom-5 left-0 text-[11px] max-w-[160px] sm:max-w-sm truncate">
+                    {fileData.name}
+                  </span>
+                </div>
+                <ProgressBar status={fileData.status} />
               </div>
             </TableCell>
             {/* <TableCell className="font-bold text-center">-50%</TableCell> */}
-            <TableCell colSpan={3} className="text-right w-[90px]">
+            <TableCell colSpan={0} className="text-right w-[90px] ml-auto">
               <Button size="sm" disabled={fileData.status !== Status.COMPLETED}>
                 {fileData.status !== Status.COMPLETED ? 'Pending' : 'Completed'}
               </Button>

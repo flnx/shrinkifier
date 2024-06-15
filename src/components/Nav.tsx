@@ -15,7 +15,7 @@ export function Nav() {
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link className="flex items-center gap-2" href="#">
           <MountainIcon className="h-6 w-6" />
-          <span className="text-lg font-bold">Acme Inc</span>
+          <span className="text-lg font-bold">Shrinkify</span>
         </Link>
         <nav className="hidden gap-6 text-sm font-medium md:flex">
           <Link className="hover:underline hover:underline-offset-4" href="#">
