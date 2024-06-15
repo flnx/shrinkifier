@@ -6,7 +6,7 @@ import { useToast } from '@/components/ui/use-toast';
 
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB in bytes
 
-export function DragAndDrop() {
+export const DragAndDrop = () => {
   const { toast } = useToast();
   const { addNewFilesHandler } = useFilesContext();
 
@@ -27,7 +27,7 @@ export function DragAndDrop() {
       toast({
         title: 'File Limit Exceeded',
         description: 'Some files were filtered out due to exceeding the limit',
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
 
@@ -49,13 +49,13 @@ export function DragAndDrop() {
       }
     });
 
-    console.log(isLimitExceeded)
+    console.log(isLimitExceeded);
 
     if (isLimitExceeded) {
       toast({
         title: 'File Limit Exceeded',
         description: 'Some files were filtered out due to exceeding the limit',
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
 
@@ -70,4 +70,4 @@ export function DragAndDrop() {
       />
     </div>
   );
-}
+};

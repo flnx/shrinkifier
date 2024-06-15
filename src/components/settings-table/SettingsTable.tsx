@@ -1,4 +1,11 @@
-import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { TableFileRowMemoized } from './TableFileRow';
 import { useFilesContext } from '@/context/FilesContext';
 
@@ -7,7 +14,11 @@ export function SettingsTable() {
 
   return (
     <Table>
-      <TableCaption>Selected images</TableCaption>
+      <TableCaption>
+        {files.length === 0
+          ? 'Select or drop images to proceed'
+          : 'Selected images: ' + files.length + '/20'}
+      </TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Image</TableHead>

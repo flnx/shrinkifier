@@ -1,7 +1,13 @@
 'use client';
 
 import { FileData, Format, Status } from '@/types/FileData';
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 interface FilesProviderProps {
   children: React.ReactNode;
@@ -61,22 +67,17 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
     );
   }, []);
 
-  const value = useMemo(
-    () => ({
-      files,
-      convertAllTo,
-      addNewFilesHandler,
-      convertAllHandler,
-      handleFileStatus,
-      removeFileHandler,
-    }),
-    [files, convertAllTo, removeFileHandler]
-  );
+  const value = {
+    files,
+    convertAllTo,
+    addNewFilesHandler,
+    convertAllHandler,
+    handleFileStatus,
+    removeFileHandler,
+  };
 
   return (
-    <FilesContext.Provider value={value}>
-      {children}
-    </FilesContext.Provider>
+    <FilesContext.Provider value={value}>{children}</FilesContext.Provider>
   );
 };
 
