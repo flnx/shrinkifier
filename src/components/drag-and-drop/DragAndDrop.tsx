@@ -1,16 +1,14 @@
 'use client';
 
+import { useFilesContext } from '@/context/FilesContext';
 import { DroppableCard } from './DroppableCard';
 import { useToast } from '@/components/ui/use-toast';
 
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB in bytes
 
-type DragAndDropProps = {
-  handleFiles: (files: File[]) => void;
-};
-
-export function DragAndDrop({ handleFiles }: DragAndDropProps) {
+export function DragAndDrop() {
   const { toast } = useToast();
+  const { addNewFilesHandler } = useFilesContext();
 
   const handleOnSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let isLimitExceeded = false;
@@ -33,7 +31,7 @@ export function DragAndDrop({ handleFiles }: DragAndDropProps) {
       });
     }
 
-    handleFiles(files);
+    addNewFilesHandler(files);
     e.target.value = '';
   };
 
@@ -61,7 +59,7 @@ export function DragAndDrop({ handleFiles }: DragAndDropProps) {
       });
     }
 
-    handleFiles(files);
+    addNewFilesHandler(files);
   };
 
   return (

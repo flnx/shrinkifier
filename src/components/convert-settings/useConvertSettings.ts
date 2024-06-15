@@ -1,15 +1,10 @@
+import { useFilesContext } from '@/context/FilesContext';
 import { convertFile } from '@/data-access/convertFile';
-import { FileData, Format, Status } from '@/types/FileData';
+import { Format, Status } from '@/types/FileData';
 
-type ConvertSettingsProps = {
-  files: FileData[];
-  handleFileStatus: (fname: string, status: Status) => void;
-};
+export const useConvertSettings = () => {
+  const { files, handleFileStatus } = useFilesContext();
 
-export const useConvertSettings = ({
-  files,
-  handleFileStatus,
-}: ConvertSettingsProps) => {
   const handleFileConvertion = async (e: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
     if (files.length === 0) return;

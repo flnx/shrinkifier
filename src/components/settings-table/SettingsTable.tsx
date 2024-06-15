@@ -1,18 +1,10 @@
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { FileData, Format } from '@/types/FileData';
 import { TableFileRowMemoized } from './TableFileRow';
+import { useFilesContext } from '@/context/FilesContext';
 
-type SettingsTableProps = {
-  imagesData: FileData[];
-  convertTo: Format | null;
-  removeFileHandler: (fileName: string) => void;
-};
+export function SettingsTable() {
+  const { files, removeFileHandler, convertAllTo } = useFilesContext();
 
-export function SettingsTable({
-  imagesData,
-  convertTo,
-  removeFileHandler,
-}: SettingsTableProps) {
   return (
     <Table>
       <TableCaption>Selected images</TableCaption>
@@ -22,11 +14,11 @@ export function SettingsTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {imagesData.map(({ fileData }, i) => (
+        {files.map(({ fileData }) => (
           <TableFileRowMemoized
             key={fileData.url + fileData.size}
             removeFileHandler={removeFileHandler}
-            convertTo={convertTo}
+            convertTo={convertAllTo}
             fileData={fileData}
           />
         ))}

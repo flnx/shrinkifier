@@ -8,29 +8,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '../ui/button';
-import { FileData, Format, Status } from '@/types/FileData';
+import { Format } from '@/types/FileData';
 import { useConvertSettings } from './useConvertSettings';
+import { useFilesContext } from '@/context/FilesContext';
 
-type ConvertSettingsProps = {
-  files: FileData[];
-  convertTo: Format | null;
-  convertAllHandler: (format: Format) => void;
-  handleFileStatus: (fname: string, status: Status) => void;
-};
+export function ConvertSettings() {
+  const { convertAllTo, convertAllHandler } = useFilesContext();
+  const { handleFileConvertion, isConverting, hasFilesToConvert } = useConvertSettings();
 
-export function ConvertSettings({
-  files,
-  convertAllHandler,
-  convertTo,
-  handleFileStatus,
-}: ConvertSettingsProps) {
-  const { 
-    handleFileConvertion, 
-    isConverting, 
-    hasFilesToConvert 
-  } = useConvertSettings({ files, handleFileStatus });
-
-  const isFormatSelected = !!convertTo;
+  const isFormatSelected = !!convertAllTo;
 
   return (
     <form className="space-y-2" onSubmit={handleFileConvertion}>
