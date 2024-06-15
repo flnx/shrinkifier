@@ -22,7 +22,7 @@ export const convertFile = async ({ file, convertTo }: ConvertFileProps) => {
   //   },
   // });
 
-  await new Promise((res) => setTimeout(res, 3000));
+  await new Promise((res) => setTimeout(res, Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000));
   return true;
 
   // return res.json();

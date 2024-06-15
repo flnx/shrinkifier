@@ -26,23 +26,43 @@ export function ConvertSettings({
 }: ConvertSettingsProps) {
   const handleFileConvertion = async (e: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
+    if (files.length === 0) return;
 
     try {
       const formData = new FormData(e.currentTarget);
       const format = formData.get('format') as Format;
 
-      handleFileStatus(files[0].fileData.name, Status.LOADING);
-      
-      const result = await convertFile({
-        file: files[0].blob,
-        convertTo: format,
-      });
+      const promises = files
+        .filter((f) => f.fileData.status !== Status.COMPLETED)
+        .map((f) => {
+          handleFileStatus(f.fileData.name, Status.LOADING);
 
-      handleFileStatus(files[0].fileData.name, Status.COMPLETED);
+          const result = convertFile({
+            file: files[0].blob,
+            convertTo: format,
+          })
+            .then((res) => res)
+            .catch((err) => {
+              console.log(err);
+            })
+            .finally(() => {
+              handleFileStatus(f.fileData.name, Status.COMPLETED);
+            });
+
+          return result;
+        });
+
+      await Promise.all(promises);
     } catch (err: any) {
       console.log(err?.message);
     }
   };
+
+  const hasFilesToConvert = files.some(
+    (f) => f.fileData.status !== Status.COMPLETED
+  );
+  const isConverting = files.some((f) => f.fileData.status === Status.LOADING);
+  const isFormatSelected = !!convertTo;
 
   return (
     <form className="space-y-2" onSubmit={handleFileConvertion}>
@@ -65,8 +85,11 @@ export function ConvertSettings({
             </SelectContent>
           </Select>
         </div>
-        
-        <Button type="submit" disabled={!!!convertTo}>
+
+        <Button
+          type="submit"
+          disabled={!isFormatSelected || !hasFilesToConvert || isConverting}
+        >
           Convert All
         </Button>
       </div>

@@ -13,7 +13,9 @@ export function ProgressBar({ status }: { status: Status }) {
     if (status === Status.PENDING) return;
 
     const percentage = status === Status.COMPLETED ? 100 : 66;
-    const timer = setTimeout(() => setProgress(percentage), 500);
+    const wait = percentage === 100 ? 0 : 500;
+
+    const timer = setTimeout(() => setProgress(percentage), wait);
     return () => clearTimeout(timer);
   }, [status]);
 
@@ -29,7 +31,7 @@ export function ProgressBar({ status }: { status: Status }) {
   return (
     <Progress
       value={progress}
-      className={cn('max-w-[250px] h-1', isInvisible ? 'visible' : 'visible')}
+      className={cn('max-w-[250px] h-1', isInvisible ? 'invisible' : 'visible')}
     />
   );
 }
