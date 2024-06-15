@@ -3,23 +3,21 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Button } from '../ui/button';
+import { FileData } from '@/types/FileData';
 
 type SettingsTableProps = {
-  imagesData: {
-    url: string;
-    size: string;
-    name: string;
-    type: string;
-  }[];
+  imagesData: FileData[];
   convertTo?: string;
 };
 
 export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
+  if (imagesData.length === 0) return null;
+
   return (
     <Table>
       <TableCaption>Selected images</TableCaption>
@@ -29,11 +27,11 @@ export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {imagesData.map((image, i) => (
-          <TableRow key={image.url + i}>
+        {imagesData.map(({ fileData }, i) => (
+          <TableRow key={fileData.url + i}>
             <TableCell className="font-medium">
               <img
-                src={image.url}
+                src={fileData.url}
                 alt="test"
                 className="h-[50px] w-[50x] object-cover rounded-sm"
                 width={50}
@@ -43,7 +41,7 @@ export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
             <TableCell>
               <div className="relative">
                 <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
-                  {image.type}
+                  {fileData.type}
                 </span>
                 {convertTo && (
                   <>
@@ -53,22 +51,18 @@ export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
                     </span>
                   </>
                 )}
-                <span className="absolute -bottom-5 left-0 text-[11px] max-w-[160px] sm:max-w-sm truncate">{image.name}</span>
+                <span className="absolute -bottom-5 left-0 text-[11px] max-w-[160px] sm:max-w-sm truncate">
+                  {fileData.name}
+                </span>
               </div>
             </TableCell>
             {/* <TableCell className="font-bold text-center">-50%</TableCell> */}
             <TableCell colSpan={3} className="text-right w-[90px]">
-              <div>Download</div>
+              <Button size="sm">Download</Button>
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter>
     </Table>
   );
 }
