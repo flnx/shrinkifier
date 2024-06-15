@@ -17,8 +17,6 @@ type SettingsTableProps = {
 };
 
 export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
-  console.log(imagesData[0]);
-
   return (
     <Table>
       <TableCaption>Selected images</TableCaption>

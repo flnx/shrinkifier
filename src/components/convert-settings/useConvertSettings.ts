@@ -1,4 +1,4 @@
-import { convertFile } from '@/data-access/sendBlob';
+import { convertFile } from '@/data-access/convertFile';
 import { FileData, Format, Status } from '@/types/FileData';
 
 type ConvertSettingsProps = {
@@ -14,34 +14,30 @@ export const useConvertSettings = ({
     e?.preventDefault();
     if (files.length === 0) return;
 
-    try {
-      const formData = new FormData(e.currentTarget);
-      const format = formData.get('format') as Format;
+    const formData = new FormData(e.currentTarget);
+    const format = formData.get('format') as Format;
 
-      const promises = files
-        .filter((f) => f.fileData.status !== Status.COMPLETED)
-        .map((f) => {
-          handleFileStatus(f.fileData.name, Status.LOADING);
+    const promises = files
+      .filter((f) => f.fileData.status !== Status.COMPLETED)
+      .map((f) => {
+        handleFileStatus(f.fileData.name, Status.LOADING);
 
-          const result = convertFile({
-            file: files[0].blob,
-            convertTo: format,
+        const result = convertFile({
+          file: files[0].blob,
+          convertTo: format,
+        })
+          .then((res) => {
+            handleFileStatus(f.fileData.name, Status.COMPLETED);
+            return res;
           })
-            .then((res) => res)
-            .catch((err) => {
-              console.log(err);
-            })
-            .finally(() => {
-              handleFileStatus(f.fileData.name, Status.COMPLETED);
-            });
+          .catch((err) => {
+            handleFileStatus(f.fileData.name, Status.FAILED);
+          });
 
-          return result;
-        });
+        return result;
+      });
 
-      await Promise.all(promises);
-    } catch (err: any) {
-      console.log(err?.message);
-    }
+    await Promise.allSettled(promises);
   };
 
   const hasFilesToConvert = files.some(

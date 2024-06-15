@@ -2,6 +2,7 @@ export enum Status {
   PENDING = 'PENDING',
   LOADING = 'LOADING',
   COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
 }
 
 export enum Format {
