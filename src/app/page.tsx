@@ -22,7 +22,9 @@ export default function Home() {
       },
     }));
 
-    setFiles((prevFiles: FileData[]) => [...prevFiles, ...filesData]);
+    setFiles((prevFiles: FileData[]) =>
+      [...prevFiles, ...filesData].slice(-20)
+    );
   };
 
   const convertAllHandler = (format: Format) => {
@@ -39,6 +41,12 @@ export default function Home() {
     );
   };
 
+  const removeFileHandler = (fileName: string) => {
+    setFiles((prevFiles) =>
+      prevFiles.filter((f) => f.fileData.name !== fileName)
+    );
+  };
+
   return (
     <div className="container max-w-screen-lg mt-10 space-y-6">
       <DragAndDrop handleFiles={filesHandler} />
@@ -50,7 +58,11 @@ export default function Home() {
             convertTo={convertAllTo}
             handleFileStatus={handleFileStatus}
           />
-          <SettingsTable imagesData={files} convertTo={convertAllTo} />
+          <SettingsTable
+            imagesData={files}
+            convertTo={convertAllTo}
+            removeFileHandler={removeFileHandler}
+          />
         </>
       )}
     </div>

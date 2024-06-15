@@ -44,9 +44,11 @@ export const DroppableCard = ({
       <CloudUploadIcon className="w-16 h-16 text-zinc-500 dark:text-zinc-400" />
 
       <CardHeader>
-        <CardTitle>Upload Images</CardTitle>
+        <CardTitle>
+          Drag and drop your images here
+        </CardTitle>
         <CardDescription>
-          Drag and drop your images or click the button below to select files.
+          Up to 20 images, 4 MB max each.
         </CardDescription>
       </CardHeader>
       <CardContent>
