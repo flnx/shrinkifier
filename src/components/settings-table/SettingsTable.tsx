@@ -8,14 +8,17 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from '../ui/button';
-import { FileData, Format } from '@/types/FileData';
+import { FileData, Format, Status } from '@/types/FileData';
 
 type SettingsTableProps = {
   imagesData: FileData[];
   convertTo: Format | null;
 };
 
+
 export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
+  console.log(imagesData[0])
+
   return (
     <Table>
       <TableCaption>Selected images</TableCaption>
@@ -56,7 +59,9 @@ export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
             </TableCell>
             {/* <TableCell className="font-bold text-center">-50%</TableCell> */}
             <TableCell colSpan={3} className="text-right w-[90px]">
-              <Button size="sm">Download</Button>
+              <Button size="sm" disabled={fileData.status !== Status.COMPLETED}>
+                {fileData.status !== Status.COMPLETED ? 'Pending' : 'Completed'}
+              </Button>
             </TableCell>
           </TableRow>
         ))}

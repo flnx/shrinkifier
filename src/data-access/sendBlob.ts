@@ -1,4 +1,11 @@
-export const convertFile = async (file: File, convertTo: string) => {
+import { Format } from '@/types/FileData';
+
+type ConvertFileProps = {
+  file: File;
+  convertTo: Format;
+};
+
+export const convertFile = async ({ file, convertTo }: ConvertFileProps) => {
   if (!file) {
     throw new Error('Please select a file');
   }
@@ -7,13 +14,16 @@ export const convertFile = async (file: File, convertTo: string) => {
     throw new Error('Please select a format');
   }
 
-  const res = await fetch('/api/convert?' + convertTo, {
-    method: 'POST',
-    body: file,
-    headers: {
-      'content-type': file?.type || 'application/octet-stream',
-    },
-  });
+  // const res = await fetch('/api/convert?' + convertTo, {
+  //   method: 'POST',
+  //   body: file,
+  //   headers: {
+  //     'content-type': file?.type || 'application/octet-stream',
+  //   },
+  // });
 
-  return res.json();
+  await new Promise((res) => setTimeout(res, 3000));
+  return true;
+
+  // return res.json();
 };

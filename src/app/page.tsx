@@ -29,6 +29,16 @@ export default function Home() {
     setConvertAllTo(format);
   };
 
+  const handleFileStatus = (fileName: string, status: Status) => {
+    setFiles((prevFiles) =>
+      prevFiles.map((f) =>
+        f.fileData.name === fileName
+          ? { ...f, fileData: { ...f.fileData, status } }
+          : f
+      )
+    );
+  };
+
   return (
     <div className="container max-w-screen-lg mt-10 space-y-6">
       <DragAndDrop handleFiles={filesHandler} />
@@ -38,11 +48,9 @@ export default function Home() {
             files={files}
             convertAllHandler={convertAllHandler}
             convertTo={convertAllTo}
+            handleFileStatus={handleFileStatus}
           />
-          <SettingsTable
-            imagesData={files}
-            convertTo={convertAllTo}
-          />
+          <SettingsTable imagesData={files} convertTo={convertAllTo} />
         </>
       )}
     </div>

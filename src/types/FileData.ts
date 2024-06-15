@@ -1,5 +1,6 @@
 export enum Status {
   PENDING = 'PENDING',
+  LOADING = 'LOADING',
   COMPLETED = 'COMPLETED',
 }
 
