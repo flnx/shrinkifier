@@ -12,7 +12,7 @@ export function ProgressBar({ status }: { status: Status }) {
   useEffect(() => {
     if (status === Status.PENDING) return;
 
-    const percentage = status === Status.COMPLETED ? 100 : 66;
+    const percentage = status === Status.COMPLETED ? 100 : Math.floor(Math.random() * 46) + 40;
     const wait = percentage === 100 ? 0 : 500;
 
     const timer = setTimeout(() => setProgress(percentage), wait);
