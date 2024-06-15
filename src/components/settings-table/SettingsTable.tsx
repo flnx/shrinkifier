@@ -8,16 +8,14 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from '../ui/button';
-import { FileData } from '@/types/FileData';
+import { FileData, Format } from '@/types/FileData';
 
 type SettingsTableProps = {
   imagesData: FileData[];
-  convertTo?: string;
+  convertTo: Format | null;
 };
 
 export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
-  if (imagesData.length === 0) return null;
-
   return (
     <Table>
       <TableCaption>Selected images</TableCaption>
@@ -47,7 +45,7 @@ export function SettingsTable({ imagesData, convertTo }: SettingsTableProps) {
                   <>
                     <span className="font-extralight">{' > '}</span>
                     <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
-                      {convertTo}
+                      {convertTo.toUpperCase()}
                     </span>
                   </>
                 )}

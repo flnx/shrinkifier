@@ -3,6 +3,12 @@ export enum Status {
   COMPLETED = 'COMPLETED',
 }
 
+export enum Format {
+  WEBP = 'WEBP',
+  JPEG = 'JPEG',
+  PNG = 'PNG',
+}
+
 export type FileData = {
   blob: File;
   fileData: {

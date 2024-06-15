@@ -3,11 +3,12 @@
 import { ConvertSettings } from '@/components/convert-settings/ConvertSettings';
 import { DragAndDrop } from '@/components/drag-and-drop/DragAndDrop';
 import { SettingsTable } from '@/components/settings-table/SettingsTable';
-import { type FileData, Status } from '@/types/FileData';
+import { type FileData, Status, Format } from '@/types/FileData';
 import { useState } from 'react';
 
 export default function Home() {
   const [files, setFiles] = useState<FileData[]>([]);
+  const [convertAllTo, setConvertAllTo] = useState<Format | null>(null);
 
   const filesHandler = (files: File[]) => {
     const filesData = files.map((f) => ({
@@ -24,11 +25,26 @@ export default function Home() {
     setFiles((prevFiles: FileData[]) => [...prevFiles, ...filesData]);
   };
 
+  const convertAllHandler = (format: Format) => {
+    setConvertAllTo(format);
+  };
+
   return (
-    <div className="container max-w-screen-lg mt-10 space-y-10">
+    <div className="container max-w-screen-lg mt-10 space-y-6">
       <DragAndDrop handleFiles={filesHandler} />
-      <ConvertSettings />
-      <SettingsTable imagesData={files} convertTo={'WEBP'} />
+      {files.length > 0 && (
+        <>
+          <ConvertSettings
+            files={files}
+            convertAllHandler={convertAllHandler}
+            convertTo={convertAllTo}
+          />
+          <SettingsTable
+            imagesData={files}
+            convertTo={convertAllTo}
+          />
+        </>
+      )}
     </div>
   );
 }
