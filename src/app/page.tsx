@@ -4,7 +4,7 @@ import { ConvertSettings } from '@/components/convert-settings/ConvertSettings';
 import { DragAndDrop } from '@/components/drag-and-drop/DragAndDrop';
 import { SettingsTable } from '@/components/settings-table/SettingsTable';
 import { type FileData, Status, Format } from '@/types/FileData';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export default function Home() {
   const [files, setFiles] = useState<FileData[]>([]);
@@ -41,11 +41,11 @@ export default function Home() {
     );
   };
 
-  const removeFileHandler = (fileName: string) => {
+  const removeFileHandler = useCallback((fileName: string) => {
     setFiles((prevFiles) =>
       prevFiles.filter((f) => f.fileData.name !== fileName)
     );
-  };
+  }, []);
 
   return (
     <div className="container max-w-screen-lg mt-10 space-y-6">
