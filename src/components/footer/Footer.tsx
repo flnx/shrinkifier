@@ -4,7 +4,7 @@ import React from 'react';
 
 export const Footer = () => {
   return (
-    <footer className="py-20 mt-auto border-t border-divider">
+    <footer className="py-12 mt-auto border-t border-divider">
       <div className="container mx-auto flex items-center justify-between space-x-8">
         <Link
           href="https://github.com/flnx"
