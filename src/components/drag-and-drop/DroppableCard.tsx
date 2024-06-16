@@ -13,9 +13,6 @@ const DroppableCard = ({ handleOnSelectChange, handleDrop }: DroppableCardProps)
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isEntered, setIsEntered] = useState(false);
 
-  console.log('hi');
-  
-
   const handleSelectBtnClick = () => {
     fileInputRef.current?.click();
   };
