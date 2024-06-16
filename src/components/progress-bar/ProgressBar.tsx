@@ -35,7 +35,7 @@ export function ProgressBar({ status }: { status: Status }) {
 
   if (status === Status.FAILED) {
     return (
-      <small className="ml-auto pr-16 text-red-500 text-sm font-mono">
+      <small className="text-red-500 text-tiny font-mono">
         Failed
       </small>
     );
