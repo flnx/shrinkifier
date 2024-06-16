@@ -1,12 +1,4 @@
 import Link from 'next/link';
-import { AvatarImage, AvatarFallback, Avatar } from '@/components/ui/avatar';
-import {
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuContent,
-  DropdownMenu,
-} from '@/components/ui/dropdown-menu';
 import { ThemeToggler } from './ThemeToggler';
 
 export function Nav() {
@@ -17,26 +9,7 @@ export function Nav() {
           <MountainIcon className="h-6 w-6" />
           <span className="text-lg font-bold">Shrinkify</span>
         </Link>
-        {/* <nav className="hidden gap-6 text-sm font-medium md:flex">
-          <Link className="hover:underline hover:underline-offset-4" href="#">
-            About
-          </Link>
-        </nav> */}
         <ThemeToggler />
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Avatar className="h-9 w-9">
-              <AvatarImage alt="@shadcn" src="/placeholder-user.jpg" />
-              <AvatarFallback>JP</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>My Account</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
       </div>
     </header>
   );
