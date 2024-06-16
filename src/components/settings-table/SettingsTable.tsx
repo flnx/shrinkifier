@@ -14,7 +14,7 @@ export function SettingsTable() {
 
   return (
     <Table>
-      <TableCaption>
+      <TableCaption className="caption-top">
         {files.length === 0
           ? 'Select or drop images to proceed'
           : 'Selected images: ' + files.length + '/20'}
@@ -27,7 +27,7 @@ export function SettingsTable() {
       <TableBody>
         {files.map(({ fileData }) => (
           <TableFileRowMemoized
-            key={fileData.url + fileData.size}
+            key={fileData.name}
             removeFileHandler={removeFileHandler}
             selectedFormat={selectedFormat}
             fileData={fileData}

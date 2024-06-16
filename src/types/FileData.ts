@@ -17,6 +17,7 @@ export type FileData = {
     url: string;
     size: string;
     name: string;
+    ogName: string;
     type: string;
     status: Status;
   };

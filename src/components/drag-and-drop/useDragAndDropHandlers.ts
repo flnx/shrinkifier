@@ -31,7 +31,7 @@ export const useDragAndDropHandlers = () => {
 
     addNewFilesHandler(files);
     e.target.value = '';
-  }, [toast, addNewFilesHandler]);
+  }, [toast]);
 
   const handleDrop = useCallback((e: DragEvent) => {
     e?.preventDefault();
@@ -56,7 +56,7 @@ export const useDragAndDropHandlers = () => {
     }
 
     addNewFilesHandler(files);
-  }, [toast, addNewFilesHandler]);
+  }, [toast]);
 
   return { handleOnSelectChange, handleDrop };
 };

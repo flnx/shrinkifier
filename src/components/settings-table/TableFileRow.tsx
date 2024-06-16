@@ -11,6 +11,7 @@ type SettingsTableProps = {
     url: string;
     size: string;
     name: string;
+    ogName: string;
     type: string;
     status: Status;
   };
@@ -49,7 +50,7 @@ const TableFileRow = ({
               </>
             )}
             <span className="absolute -bottom-5 left-0 text-[11px] max-w-[160px] sm:max-w-sm truncate">
-              {fileData.name}
+              {fileData.ogName}
             </span>
           </div>
           <ProgressBar status={fileData.status} />
