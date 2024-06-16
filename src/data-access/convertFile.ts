@@ -2,19 +2,19 @@ import { Format } from '@/types/FileData';
 
 type ConvertFileProps = {
   file: File;
-  convertTo: Format;
+  selectedFormat: Format;
 };
 
-export const convertFile = async ({ file, convertTo }: ConvertFileProps) => {
+export const convertFile = async ({ file, selectedFormat }: ConvertFileProps) => {
   if (!file) {
     throw new Error('Please select a file');
   }
 
-  if (!convertTo) {
+  if (!selectedFormat) {
     throw new Error('Please select a format');
   }
 
-  // const res = await fetch('/api/convert?' + convertTo, {
+  // const res = await fetch('/api/convert?' + selectedFormat, {
   //   method: 'POST',
   //   body: file,
   //   headers: {

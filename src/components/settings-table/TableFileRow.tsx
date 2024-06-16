@@ -14,13 +14,13 @@ type SettingsTableProps = {
     type: string;
     status: Status;
   };
-  convertTo: Format | null;
+  selectedFormat: Format | null;
   removeFileHandler: (fileName: string) => void;
 };
 
 const TableFileRow = ({
   fileData,
-  convertTo,
+  selectedFormat,
   removeFileHandler,
 }: SettingsTableProps) => {
   return (
@@ -40,11 +40,11 @@ const TableFileRow = ({
             <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
               {fileData.type}
             </span>
-            {convertTo && (
+            {selectedFormat && (
               <>
                 <span className="font-extralight">{' > '}</span>
                 <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
-                  {convertTo.toUpperCase()}
+                  {selectedFormat.toUpperCase()}
                 </span>
               </>
             )}

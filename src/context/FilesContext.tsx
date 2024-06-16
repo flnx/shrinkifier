@@ -1,13 +1,7 @@
 'use client';
 
 import { FileData, Format, Status } from '@/types/FileData';
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 interface FilesProviderProps {
   children: React.ReactNode;
@@ -15,9 +9,9 @@ interface FilesProviderProps {
 
 interface FilesContextType {
   files: FileData[];
-  convertAllTo: Format | null;
+  selectedFormat: Format | null;
   addNewFilesHandler: (files: File[]) => void;
-  convertAllHandler: (format: Format) => void;
+  selectFormatHandler: (format: Format) => void;
   handleFileStatus: (fileName: string, status: Status) => void;
   removeFileHandler: (fileName: string) => void;
 }
@@ -26,7 +20,7 @@ const FilesContext = createContext<FilesContextType | null>(null);
 
 export const FilesProvider = ({ children }: FilesProviderProps) => {
   const [files, setFiles] = useState<FileData[]>([]);
-  const [convertAllTo, setConvertAllTo] = useState<Format | null>(null);
+  const [selectedFormat, setSelectedFormat] = useState<Format | null>(null);
 
   const addNewFilesHandler = (files: File[]) => {
     const filesData = files.map((f) => ({
@@ -47,8 +41,8 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
   };
 
   // Handler to set the format for all files
-  const convertAllHandler = (format: Format) => {
-    setConvertAllTo(format);
+  const selectFormatHandler = (format: Format) => {
+    setSelectedFormat(format);
   };
 
   const handleFileStatus = (fileName: string, status: Status) => {
@@ -69,9 +63,9 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
 
   const value = {
     files,
-    convertAllTo,
+    selectedFormat,
     addNewFilesHandler,
-    convertAllHandler,
+    selectFormatHandler,
     handleFileStatus,
     removeFileHandler,
   };

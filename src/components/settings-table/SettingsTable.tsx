@@ -10,7 +10,7 @@ import { TableFileRowMemoized } from './TableFileRow';
 import { useFilesContext } from '@/context/FilesContext';
 
 export function SettingsTable() {
-  const { files, removeFileHandler, convertAllTo } = useFilesContext();
+  const { files, removeFileHandler, selectedFormat } = useFilesContext();
 
   return (
     <Table>
@@ -29,7 +29,7 @@ export function SettingsTable() {
           <TableFileRowMemoized
             key={fileData.url + fileData.size}
             removeFileHandler={removeFileHandler}
-            convertTo={convertAllTo}
+            selectedFormat={selectedFormat}
             fileData={fileData}
           />
         ))}

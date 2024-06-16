@@ -5,7 +5,7 @@ import { Format, Status } from '@/types/FileData';
 export const useConvertSettings = () => {
   const { files, handleFileStatus } = useFilesContext();
 
-  const handleFileConvertion = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submitFilesHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
     if (files.length === 0) return;
 
@@ -19,7 +19,7 @@ export const useConvertSettings = () => {
 
         const result = convertFile({
           file: files[0].blob,
-          convertTo: format,
+          selectedFormat: format,
         })
           .then((res) => {
             handleFileStatus(f.fileData.name, Status.COMPLETED);
@@ -39,7 +39,7 @@ export const useConvertSettings = () => {
     (f) => f.fileData.status !== Status.COMPLETED
   );
 
-  const isConverting = files.some((f) => f.fileData.status === Status.LOADING);
+  const isLoading = files.some((f) => f.fileData.status === Status.LOADING);
 
-  return { handleFileConvertion, hasFilesToConvert, isConverting };
+  return { submitFilesHandler, hasFilesToConvert, isLoading };
 };

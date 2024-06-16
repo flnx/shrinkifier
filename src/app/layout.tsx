@@ -14,7 +14,7 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: 'Shrinkify',
   description:
-    'Convert different images formats. Optimize, crop, change aspect ratio and more',
+    'Convert different image formats. Optimize, crop, change aspect ratio and more',
 };
 
 type RootLayoutProps = Readonly<{

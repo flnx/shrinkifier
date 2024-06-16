@@ -13,17 +13,17 @@ import { useConvertSettings } from './useConvertSettings';
 import { useFilesContext } from '@/context/FilesContext';
 
 export function ConvertSettings() {
-  const { convertAllTo, convertAllHandler } = useFilesContext();
-  const { handleFileConvertion, isConverting, hasFilesToConvert } = useConvertSettings();
+  const { selectedFormat, selectFormatHandler } = useFilesContext();
+  const { submitFilesHandler, isLoading, hasFilesToConvert } = useConvertSettings();
 
-  const isFormatSelected = !!convertAllTo;
+  const isFormatSelected = !!selectedFormat;
 
   return (
-    <form className="space-y-2" onSubmit={handleFileConvertion}>
+    <form className="space-y-2" onSubmit={submitFilesHandler}>
       <p className="text-sm">Convert to</p>
       <div className="flex justify-between items-center gap-1">
         <div className="space-y-2">
-          <Select name="format" onValueChange={convertAllHandler}>
+          <Select name="format" onValueChange={selectFormatHandler}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select a format" />
             </SelectTrigger>
@@ -42,7 +42,7 @@ export function ConvertSettings() {
 
         <Button
           type="submit"
-          disabled={!isFormatSelected || !hasFilesToConvert || isConverting}
+          disabled={!isFormatSelected || !hasFilesToConvert || isLoading}
         >
           Convert All
         </Button>
