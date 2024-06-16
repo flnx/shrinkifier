@@ -17,13 +17,13 @@ export function Nav() {
           <MountainIcon className="h-6 w-6" />
           <span className="text-lg font-bold">Shrinkify</span>
         </Link>
-        <nav className="hidden gap-6 text-sm font-medium md:flex">
+        {/* <nav className="hidden gap-6 text-sm font-medium md:flex">
           <Link className="hover:underline hover:underline-offset-4" href="#">
             About
           </Link>
-        </nav>
+        </nav> */}
         <ThemeToggler />
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="h-9 w-9">
               <AvatarImage alt="@shadcn" src="/placeholder-user.jpg" />
@@ -36,7 +36,7 @@ export function Nav() {
             <DropdownMenuSeparator />
             <DropdownMenuItem>Logout</DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </div>
     </header>
   );

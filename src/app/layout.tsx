@@ -5,6 +5,7 @@ import { ThemeProvider } from './providers';
 import { Nav } from '@/components/Nav';
 import { Toaster } from '@/components/ui/toaster';
 import '@/styles/globals.css';
+import { Footer } from '@/components/footer/Footer';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -26,7 +27,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen bg-background font-sans antialiased flex flex-col',
           fontSans.variable
         )}
       >
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Nav />
           <main>{children}</main>
           <Toaster />
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

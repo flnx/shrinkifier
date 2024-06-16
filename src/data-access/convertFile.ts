@@ -22,14 +22,6 @@ export const convertFile = async ({ file, selectedFormat }: ConvertFileProps) =>
   //   },
   // });
 
-  const RNUM = Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000;
-  await new Promise((res) => setTimeout(res, RNUM));
-
-
-  if (RNUM < 5000) {
-    throw new Error('error');
-  }
-
   return true;
 
   // return res.json();
