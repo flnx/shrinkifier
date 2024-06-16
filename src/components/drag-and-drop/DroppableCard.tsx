@@ -1,29 +1,22 @@
-import {
-  CardTitle,
-  CardDescription,
-  CardHeader,
-  CardContent,
-  Card,
-} from '@/components/ui/card';
+import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useRef, useState } from 'react';
 import { Input } from '../ui/input';
 import { cn } from '@/lib/utils';
+import { memo, useRef, useState } from 'react';
 
 type DroppableCardProps = {
   handleOnSelectChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDrop: (e: React.DragEvent) => void;
 };
 
-export const DroppableCard = ({
-  handleOnSelectChange,
-  handleDrop,
-}: DroppableCardProps) => {
+const DroppableCard = ({ handleOnSelectChange, handleDrop }: DroppableCardProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isEntered, setIsEntered] = useState(false);
 
+  console.log('hi');
+  
+
   const handleSelectBtnClick = () => {
-    // Trigger the file input click
     fileInputRef.current?.click();
   };
 
@@ -44,12 +37,8 @@ export const DroppableCard = ({
       <CloudUploadIcon className="w-16 h-16 text-zinc-500 dark:text-zinc-400" />
 
       <CardHeader>
-        <CardTitle>
-          Drag and drop your images here
-        </CardTitle>
-        <CardDescription>
-          Up to 20 images, 4 MB max each.
-        </CardDescription>
+        <CardTitle>Drag and drop your images here</CardTitle>
+        <CardDescription>Up to 20 images, 4 MB max each.</CardDescription>
       </CardHeader>
       <CardContent>
         <Button variant="outline" onClick={handleSelectBtnClick}>
@@ -89,3 +78,5 @@ function CloudUploadIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export const DroppableCardMemoized = memo(DroppableCard);

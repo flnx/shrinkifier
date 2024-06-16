@@ -22,7 +22,7 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
   const [files, setFiles] = useState<FileData[]>([]);
   const [selectedFormat, setSelectedFormat] = useState<Format | null>(null);
 
-  const addNewFilesHandler = (files: File[]) => {
+  const addNewFilesHandler = useCallback((files: File[]) => {
     const filesData = files.map((f) => ({
       blob: f,
       fileData: {
@@ -38,9 +38,8 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
     setFiles((prevFiles: FileData[]) =>
       [...prevFiles, ...filesData].slice(-20)
     );
-  };
+  }, []);
 
-  // Handler to set the format for all files
   const selectFormatHandler = (format: Format) => {
     setSelectedFormat(format);
   };
