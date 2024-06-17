@@ -22,11 +22,7 @@ export const convertFile = async ({
     },
   });
 
-  const data = await res.json();
-  const arrayBuffer = new Uint8Array(data.arrayBuffer.data).buffer;
-  const mimeType = 'image/' + selectedFormat.toLowerCase();
-
-  const blob = new Blob([arrayBuffer], { type: mimeType });
+  const blob = await res.blob();
 
   return blob;
 };

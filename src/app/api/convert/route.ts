@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   const headers = req.headers.get('content-type') || '';
 
   try {
-    if (!FORMATS.includes(selectedFormat) || !TYPES.includes(headers)) {
+    if (!FORMATS.includes(selectedFormat.toUpperCase()) || !TYPES.includes(headers)) {
       throw new Error('The requested format is not supported');
     }
 
@@ -31,7 +31,9 @@ export async function POST(req: Request) {
       }
 
       case Format.PNG: {
-        newBuffer = await sharp(arrayBuffer).png({ quality: 70 }).toBuffer();
+        newBuffer = await sharp(arrayBuffer)
+          .png({ quality: 70, compressionLevel: 8 })
+          .toBuffer();
         break;
       }
 
@@ -39,21 +41,42 @@ export async function POST(req: Request) {
         throw new Error('The requested format is not supported');
     }
 
-    const metadata = await sharp(newBuffer).metadata();
+    const { width, height, size } = await sharp(newBuffer).metadata();
 
-    return Response.json(
-      {
-        arrayBuffer: newBuffer,
+    if (size && width && height && size > 4 * 1024 * 1024) {
+      newBuffer = await resizeToMaxSize(newBuffer);
+    }
+
+    return new Response(newBuffer, {
+      status: 200,
+      headers: {
+        'Content-Type': `image/${selectedFormat.toLowerCase()}`,
       },
-      {
-        headers: {
-          'Content-Type': `image/${metadata.format}`,
-        },
-        status: 200,
-      }
-    );
+    });
   } catch (err: unknown) {
     const eMsg = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ message: eMsg }, { status: 400 });
+  }
+}
+
+async function resizeToMaxSize(buffer: Buffer): Promise<Buffer> {
+  const metadata = await sharp(buffer).metadata();
+
+  const { width, height, size } = metadata;
+
+  if (size !== undefined && size > 4 * 1024 * 1024) {
+    // Reduce dimensions by 10%
+    const newWidth = Math.round((width || 0) * 0.9);
+    const newHeight = Math.round((height || 0) * 0.9);
+
+    const resizedBuffer = await sharp(buffer)
+      .resize(newWidth, newHeight)
+      .toBuffer();
+
+    // Recursively call resizeToMaxSize with the resized buffer
+    return await resizeToMaxSize(resizedBuffer);
+  } else {
+    // Return the buffer if it's within the size limit
+    return buffer;
   }
 }

@@ -16,6 +16,7 @@ interface FilesContextType {
   handleFileStatus: (fileName: string, status: Status) => void;
   removeFileHandler: (fileName: string) => void;
   addConvertedFileBlob: (fileName: string, blob: Blob) => void;
+  removeAllFilesHandler: () => void;
 }
 
 const FilesContext = createContext<FilesContextType | null>(null);
@@ -96,6 +97,14 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
     );
   }, []);
 
+  const removeAllFilesHandler = () => {
+    files.forEach(f => {
+      URL.revokeObjectURL(f.fileData.url);
+    })
+
+    setFiles([]);
+  }
+
   const value = {
     files,
     selectedFormat,
@@ -103,7 +112,8 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
     selectFormatHandler,
     handleFileStatus,
     removeFileHandler,
-    addConvertedFileBlob
+    addConvertedFileBlob,
+    removeAllFilesHandler
   };
 
   return (

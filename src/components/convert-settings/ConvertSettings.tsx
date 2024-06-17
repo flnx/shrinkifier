@@ -15,12 +15,15 @@ import { cn } from '@/lib/utils';
 
 export function ConvertSettings() {
   const { selectedFormat, selectFormatHandler } = useFilesContext();
+
   const {
     submitFilesHandler,
     isLoading,
     hasFilesToConvert,
     canZip,
     zipAndDownload,
+    removeAllFilesHandler,
+    hasFilesToClear
   } = useConvertSettings();
 
   const isFormatSelected = !!selectedFormat;
@@ -56,13 +59,24 @@ export function ConvertSettings() {
           </Button>
         </div>
       </form>
-      <Button
-        type="button"
-        className={cn(canZip && !isLoading ? 'visible' : 'invisible')}
-        onClick={zipAndDownload}
-      >
-        Download All
-      </Button>
+      <div className="flex justify-between gap-1">
+        <Button
+          type="button"
+          className={cn(canZip && !isLoading ? 'visible' : 'invisible')}
+          onClick={zipAndDownload}
+          >
+          Download All
+        </Button>
+        <Button
+          type="button"
+          variant="destructive"
+          disabled={isLoading}
+          className={cn(hasFilesToClear ? 'visible' : 'invisible')}
+          onClick={removeAllFilesHandler}
+        >
+          Clear All
+        </Button>
+      </div>
     </div>
   );
 }

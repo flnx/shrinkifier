@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Format, Status } from '@/types/FileData';
 import { ProgressBar } from '@/components/progress-bar/ProgressBar';
 import { Separator } from '@/components/ui/separator';
+import { CheckIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 
 type SettingsTableProps = {
   convertedBlob?: Blob;
@@ -46,31 +47,39 @@ const ImageCardRow = ({
       <div className="space-y-2 p-0 sm:px-2 flex flex-col sm:flex-row">
         <div className="flex items-center gap-8">
           {/* Image */}
-          <section className="font-medium">
+          <section className="font-medium relative flex items-center justify-center">
             <img
               src={fileData.url}
               alt="test"
-              className="h-[80px] w-[80px] object-cover rounded-sm aspect-square"
-              width={80}
-              height={80}
+              className="h-[65px] w-[65px] object-cover rounded-sm aspect-square"
+              width={65}
+              height={65}
             />
+            {fileData.status === Status.COMPLETED && (
+              <>
+                <div className="absolute w-full h-full bg-black/90 opacity-80 rounded-sm z-10 top-0" />
+                <div className="absolute text-green-500 grid items-center font-mono text-[12px] z-10">
+                  <CheckIcon width={40} height={40} className="ml-auto" />
+                </div>
+              </>
+            )}
           </section>
 
           {/* Format */}
           <section className="flex-1 space-y-1">
-            <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
+            <span className="text-[10px] font-bold py-[2px] bg-foreground text-secondary px-[3px] rounded-sm">
               {fileData.type}
             </span>
             {selectedFormat && (
               <>
-                <span className="font-extralight">{' > '}</span>
-                <span className="text-[11px] bg-primary text-primary-foreground px-[3px] rounded-sm">
+                <ChevronRightIcon className="inline" height={14} width={14} />
+                <span className="text-[10px] bg-primary font-bold dark:bg-primary text-white/90 py-[2px] px-[3px] rounded-sm">
                   {selectedFormat.toUpperCase()}
                 </span>
               </>
             )}
             <div className="text-[11px] w-40 sm:w-[250px] md:w-auto max-w-screen-sm truncate">
-              {fileData.ogName}
+              {fileData.ogName.replace(/\.(png|webp|jpg|jpeg)$/i, '')}
             </div>
 
             <div className="h-3 flex items-center">
@@ -98,7 +107,7 @@ const ImageCardRow = ({
             variant="destructive"
             onClick={() => removeFileHandler(fileData.name)}
           >
-            Remove
+            Clear
           </Button>
         </section>
       </div>

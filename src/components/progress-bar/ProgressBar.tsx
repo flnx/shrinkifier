@@ -46,7 +46,7 @@ export function ProgressBar({ status }: { status: Status }) {
   return (
     <Progress
       value={progress}
-      className={cn('max-w-[250px] h-1', isInvisible ? 'invisible' : 'visible')}
+      className={cn('max-w-[250px] md:w-[250px] h-1', isInvisible ? 'invisible' : 'visible')}
     />
   );
 }

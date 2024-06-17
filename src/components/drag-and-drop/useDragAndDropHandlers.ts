@@ -23,8 +23,8 @@ export const useDragAndDropHandlers = () => {
 
     if (isLimitExceeded) {
       toast({
-        title: 'File Limit Exceeded',
-        description: 'Some files were filtered out due to exceeding the limit',
+        title: 'Some Files Were Excluded',
+        description: 'Files larger than 4MB were excluded',
         variant: 'destructive',
       });
     }

@@ -45,8 +45,9 @@ const DroppableCard = ({ handleOnSelectChange, handleDrop }: DroppableCardProps)
           id="file-input"
           type="file"
           multiple
+          hidden={true}
           accept="image/*"
-          className="sr-only"
+          className="sr-only hidden"
           ref={fileInputRef}
           onChange={handleOnSelectChange}
         />

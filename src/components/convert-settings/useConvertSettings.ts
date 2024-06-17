@@ -6,7 +6,7 @@ import { saveAs } from 'file-saver';
 import { useToast } from '../ui/use-toast';
 
 export const useConvertSettings = () => {
-  const { files, handleFileStatus, addConvertedFileBlob } = useFilesContext();
+  const { files, handleFileStatus, addConvertedFileBlob, removeAllFilesHandler } = useFilesContext();
   const { toast } = useToast();
 
   const submitFilesHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -67,5 +67,7 @@ export const useConvertSettings = () => {
     files,
     canZip,
     zipAndDownload,
+    removeAllFilesHandler,
+    hasFilesToClear: files.length !== 0
   };
 };
