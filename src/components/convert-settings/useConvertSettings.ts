@@ -1,9 +1,13 @@
 import { useFilesContext } from '@/context/FilesContext';
 import { convertFile } from '@/data-access/convertFile';
+import { zipFiles } from '@/lib/utils';
 import { Format, Status } from '@/types/FileData';
+import { saveAs } from 'file-saver';
+import { useToast } from '../ui/use-toast';
 
 export const useConvertSettings = () => {
   const { files, handleFileStatus, addConvertedFileBlob } = useFilesContext();
+  const { toast } = useToast();
 
   const submitFilesHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
@@ -18,7 +22,7 @@ export const useConvertSettings = () => {
         handleFileStatus(f.fileData.name, Status.LOADING);
 
         const result = convertFile({
-          file: files[0].blob,
+          file: f.blob,
           selectedFormat: format,
         })
           .then((blob) => {
@@ -40,7 +44,28 @@ export const useConvertSettings = () => {
     (f) => f.fileData.status !== Status.COMPLETED
   );
 
+  const zipAndDownload = async () => {
+    try {
+      const zippedFiles = await zipFiles(files);
+      saveAs(zippedFiles, 'shrinkify.zip');
+    } catch (err) {
+      toast({
+        title: 'Failed to Zip Files',
+        description: 'An error occurred while zipping the files. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const canZip = files.some((f) => f.convertedBlob);
   const isLoading = files.some((f) => f.fileData.status === Status.LOADING);
 
-  return { submitFilesHandler, hasFilesToConvert, isLoading };
+  return {
+    submitFilesHandler,
+    hasFilesToConvert,
+    isLoading,
+    files,
+    canZip,
+    zipAndDownload,
+  };
 };
