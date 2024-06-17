@@ -76,7 +76,14 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
 
   const removeFileHandler = useCallback((fileName: string) => {
     setFiles((prevFiles) =>
-      prevFiles.filter((f) => f.fileData.name !== fileName)
+      prevFiles.filter((f) => {
+        if (f.fileData.name === fileName) {
+          URL.revokeObjectURL(f.fileData.url);
+          return false;
+        }
+
+        return true;
+      })
     );
   }, []);
 
