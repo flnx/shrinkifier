@@ -15,6 +15,7 @@ interface FilesContextType {
   selectFormatHandler: (format: Format) => void;
   handleFileStatus: (fileName: string, status: Status) => void;
   removeFileHandler: (fileName: string) => void;
+  addConvertedFileBlob: (fileName: string, blob: Blob) => void;
 }
 
 const FilesContext = createContext<FilesContextType | null>(null);
@@ -74,6 +75,14 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
     );
   };
 
+  const addConvertedFileBlob = (name: string, blob: Blob) => {
+    setFiles((prevFiles) =>
+      prevFiles.map((f) =>
+        f.fileData.name === name ? { ...f, convertedBlob: blob } : f
+      )
+    );
+  };
+
   const removeFileHandler = useCallback((fileName: string) => {
     setFiles((prevFiles) =>
       prevFiles.filter((f) => {
@@ -94,6 +103,7 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
     selectFormatHandler,
     handleFileStatus,
     removeFileHandler,
+    addConvertedFileBlob
   };
 
   return (

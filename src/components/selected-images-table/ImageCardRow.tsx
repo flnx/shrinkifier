@@ -6,6 +6,7 @@ import { ProgressBar } from '@/components/progress-bar/ProgressBar';
 import { Separator } from '@/components/ui/separator';
 
 type SettingsTableProps = {
+  convertedBlob?: Blob;
   fileData: {
     url: string;
     size: string;
@@ -22,7 +23,24 @@ const ImageCardRow = ({
   fileData,
   selectedFormat,
   removeFileHandler,
+  convertedBlob,
 }: SettingsTableProps) => {
+  const handleDownload = () => {
+    if (!convertedBlob) return;
+
+    const blobUrl = URL.createObjectURL(convertedBlob);
+    const link = document.createElement('a');
+
+    link.download = fileData.ogName;
+    link.href = blobUrl;
+
+    document.body.appendChild(link);
+    link.click();
+
+    link.remove();
+    URL.revokeObjectURL(blobUrl);
+  };
+
   return (
     <>
       <div className="space-y-2 p-0 sm:px-2 flex flex-col sm:flex-row">
@@ -66,6 +84,7 @@ const ImageCardRow = ({
           <Button
             size="sm"
             disabled={fileData.status !== Status.COMPLETED}
+            onClick={handleDownload}
             className={cn(
               fileData.status === Status.COMPLETED ? 'visible' : 'invisible'
             )}

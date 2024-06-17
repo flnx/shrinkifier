@@ -1,27 +1,59 @@
-import { headers } from 'next/headers';
+import { Format } from '@/types/FileData';
 import { NextResponse } from 'next/server';
 import sharp from 'sharp';
-import { buffer } from 'stream/consumers';
-// import { put } from '@vercel/blob';
 
-// const nanoid = customAlphabet(
-//   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
-//   7
-// ) // 7-character random string
+const FORMATS = ['PNG', 'JPEG', 'WEBP'];
+const TYPES = ['image/jpeg', 'image/png', 'image/gif'];
 
 export async function POST(req: Request) {
-  const blob = await req.blob();
+  const selectedFormat = req.headers.get('u-format') || '';
+  const headers = req.headers.get('content-type') || '';
 
-  const arrayBuffer = await blob.arrayBuffer();
-  const webpBuffer = await sharp(arrayBuffer).webp({ quality: 70}).toBuffer();
+  try {
+    if (!FORMATS.includes(selectedFormat) || !TYPES.includes(headers)) {
+      throw new Error('The requested format is not supported');
+    }
 
-  const metadata = await sharp(webpBuffer).metadata();
+    const blob = await req.blob();
+    const arrayBuffer = await blob.arrayBuffer();
 
-  console.log(metadata)
+    let newBuffer: Buffer;
 
-  return Response.json({
-    arrayBuffer: webpBuffer
-  })
+    switch (selectedFormat) {
+      case Format.WEBP: {
+        newBuffer = await sharp(arrayBuffer).webp({ quality: 70 }).toBuffer();
+        break;
+      }
 
-  // return NextResponse.
+      case Format.JPEG: {
+        newBuffer = await sharp(arrayBuffer).jpeg({ quality: 70 }).toBuffer();
+        break;
+      }
+
+      case Format.PNG: {
+        newBuffer = await sharp(arrayBuffer).png({ quality: 70 }).toBuffer();
+        break;
+      }
+
+      default:
+        throw new Error('The requested format is not supported');
+    }
+
+    const metadata = await sharp(newBuffer).metadata();
+
+    return Response.json(
+      {
+        arrayBuffer: newBuffer,
+      },
+      {
+        headers: {
+          'Content-Type': `image/${metadata.format}`,
+        },
+        status: 200,
+      }
+    );
+  } catch (err: unknown) {
+    const eMsg = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ message: eMsg }, { status: 400 });
+  }
 }

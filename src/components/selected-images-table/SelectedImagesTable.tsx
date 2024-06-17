@@ -13,12 +13,13 @@ export function SelectedImagesTable() {
       </h3>
 
       <div>
-        {files.map(({ fileData }) => (
+        {files.map(({ fileData, convertedBlob }) => (
           <CardRowMemoized
             key={fileData.name}
             removeFileHandler={removeFileHandler}
             selectedFormat={selectedFormat}
             fileData={fileData}
+            convertedBlob={convertedBlob}
           />
         ))}
       </div>

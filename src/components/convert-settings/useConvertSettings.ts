@@ -3,7 +3,7 @@ import { convertFile } from '@/data-access/convertFile';
 import { Format, Status } from '@/types/FileData';
 
 export const useConvertSettings = () => {
-  const { files, handleFileStatus } = useFilesContext();
+  const { files, handleFileStatus, addConvertedFileBlob } = useFilesContext();
 
   const submitFilesHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
@@ -21,9 +21,10 @@ export const useConvertSettings = () => {
           file: files[0].blob,
           selectedFormat: format,
         })
-          .then((res) => {
+          .then((blob) => {
+            addConvertedFileBlob(f.fileData.name, blob);
             handleFileStatus(f.fileData.name, Status.COMPLETED);
-            return res;
+            return blob;
           })
           .catch((err) => {
             handleFileStatus(f.fileData.name, Status.FAILED);

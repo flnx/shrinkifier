@@ -13,6 +13,7 @@ export enum Format {
 
 export type FileData = {
   blob: File;
+  convertedBlob?: Blob,
   fileData: {
     url: string;
     size: string;
