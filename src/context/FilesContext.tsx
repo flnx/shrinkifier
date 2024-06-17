@@ -12,7 +12,7 @@ interface FilesContextType {
   files: FileData[];
   selectedFormat: Format | null;
   addNewFilesHandler: (files: File[]) => void;
-  selectFormatHandler: (format: Format) => void;
+  handleFileFormat: (format: Format) => void;
   handleFileStatus: (fileName: string, status: Status) => void;
   removeFileHandler: (fileName: string) => void;
   addConvertedFileBlob: (fileName: string, blob: Blob) => void;
@@ -23,9 +23,9 @@ const FilesContext = createContext<FilesContextType | null>(null);
 
 export const FilesProvider = ({ children }: FilesProviderProps) => {
   const [files, setFiles] = useState<FileData[]>([]);
-  const [selectedFormat, setSelectedFormat] = useState<Format | null>(null);
+  const [selectedFormat, setSelectedFormat] = useState<null | Format>(null);
   const { toast } = useToast();
-
+  
   const addNewFilesHandler = (newFiles: File[]) => {
     if (files.length >= 20) {
       toast({
@@ -33,12 +33,12 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
         description: 'Please remove some images before uploading new ones.',
         variant: 'destructive',
       });
-
+      
       return null;
     }
-
     const filesData = newFiles.map((f) => ({
       blob: f,
+      convertedTo: selectedFormat,
       fileData: {
         url: URL.createObjectURL(f),
         size: (f.size / 1024).toFixed(2),
@@ -62,8 +62,14 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
     });
   };
 
-  const selectFormatHandler = (format: Format) => {
+  const handleFileFormat = (format: Format) => {
     setSelectedFormat(format);
+    setFiles((prevFiles) =>
+      prevFiles.map((f) => ({
+        ...f,
+        convertedTo: f.convertedBlob ? f.convertedTo : format, // change format only if it has not been converted
+      }))
+    );
   };
 
   const handleFileStatus = (fileName: string, status: Status) => {
@@ -98,22 +104,22 @@ export const FilesProvider = ({ children }: FilesProviderProps) => {
   }, []);
 
   const removeAllFilesHandler = () => {
-    files.forEach(f => {
+    files.forEach((f) => {
       URL.revokeObjectURL(f.fileData.url);
-    })
+    });
 
     setFiles([]);
-  }
+  };
 
   const value = {
     files,
-    selectedFormat,
     addNewFilesHandler,
-    selectFormatHandler,
+    handleFileFormat,
     handleFileStatus,
     removeFileHandler,
     addConvertedFileBlob,
-    removeAllFilesHandler
+    removeAllFilesHandler,
+    selectedFormat
   };
 
   return (

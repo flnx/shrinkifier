@@ -6,7 +6,7 @@ const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB in bytes
 
 export const useDragAndDropHandlers = () => {
   const { toast } = useToast();
-  const { addNewFilesHandler } = useFilesContext();
+  const { addNewFilesHandler, selectedFormat } = useFilesContext();
 
   const handleOnSelectChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     let isLimitExceeded = false;
@@ -31,7 +31,7 @@ export const useDragAndDropHandlers = () => {
 
     addNewFilesHandler(files);
     e.target.value = '';
-  }, [toast]);
+  }, [toast, selectedFormat]);
 
   const handleDrop = useCallback((e: DragEvent) => {
     e?.preventDefault();
@@ -56,7 +56,7 @@ export const useDragAndDropHandlers = () => {
     }
 
     addNewFilesHandler(files);
-  }, [toast]);
+  }, [toast, selectedFormat]);
 
   return { handleOnSelectChange, handleDrop };
 };

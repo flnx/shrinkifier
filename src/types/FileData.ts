@@ -14,6 +14,7 @@ export enum Format {
 export type FileData = {
   blob: File;
   convertedBlob?: Blob,
+  convertedTo: Format | null,
   fileData: {
     url: string;
     size: string;

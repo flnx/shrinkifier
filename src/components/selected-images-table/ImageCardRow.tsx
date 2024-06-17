@@ -1,31 +1,19 @@
 import React, { memo } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Format, Status } from '@/types/FileData';
+import { FileData, Format, Status } from '@/types/FileData';
 import { ProgressBar } from '@/components/progress-bar/ProgressBar';
 import { Separator } from '@/components/ui/separator';
 import { CheckIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 
 type SettingsTableProps = {
-  convertedBlob?: Blob;
-  fileData: {
-    url: string;
-    size: string;
-    name: string;
-    ogName: string;
-    type: string;
-    status: Status;
-  };
-  selectedFormat: Format | null;
+  file: FileData;
   removeFileHandler: (fileName: string) => void;
 };
 
-const ImageCardRow = ({
-  fileData,
-  selectedFormat,
-  removeFileHandler,
-  convertedBlob,
-}: SettingsTableProps) => {
+const ImageCardRow = ({ file, removeFileHandler }: SettingsTableProps) => {
+  const { fileData, convertedTo, convertedBlob } = file;
+
   const handleDownload = () => {
     if (!convertedBlob) return;
 
@@ -70,11 +58,11 @@ const ImageCardRow = ({
             <span className="text-[10px] font-bold py-[2px] bg-foreground text-secondary px-[3px] rounded-sm">
               {fileData.type}
             </span>
-            {selectedFormat && (
+            {convertedTo && (
               <>
                 <ChevronRightIcon className="inline" height={14} width={14} />
                 <span className="text-[10px] bg-primary font-bold dark:bg-primary text-white/90 py-[2px] px-[3px] rounded-sm">
-                  {selectedFormat.toUpperCase()}
+                  {convertedTo.toUpperCase()}
                 </span>
               </>
             )}

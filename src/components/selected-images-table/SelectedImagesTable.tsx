@@ -2,7 +2,7 @@ import { CardRowMemoized } from './ImageCardRow';
 import { useFilesContext } from '@/context/FilesContext';
 
 export function SelectedImagesTable() {
-  const { files, removeFileHandler, selectedFormat } = useFilesContext();
+  const { files, removeFileHandler } = useFilesContext();
 
   return (
     <section className="space-y-10">
@@ -13,13 +13,11 @@ export function SelectedImagesTable() {
       </h3>
 
       <div>
-        {files.map(({ fileData, convertedBlob }) => (
+        {files.map((file) => (
           <CardRowMemoized
-            key={fileData.name}
+            key={file.fileData.name}
             removeFileHandler={removeFileHandler}
-            selectedFormat={selectedFormat}
-            fileData={fileData}
-            convertedBlob={convertedBlob}
+            file={file}
           />
         ))}
       </div>

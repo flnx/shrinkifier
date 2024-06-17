@@ -10,12 +10,9 @@ import {
 import { Button } from '../ui/button';
 import { Format } from '@/types/FileData';
 import { useConvertSettings } from './useConvertSettings';
-import { useFilesContext } from '@/context/FilesContext';
 import { cn } from '@/lib/utils';
 
 export function ConvertSettings() {
-  const { selectedFormat, selectFormatHandler } = useFilesContext();
-
   const {
     submitFilesHandler,
     isLoading,
@@ -23,7 +20,9 @@ export function ConvertSettings() {
     canZip,
     zipAndDownload,
     removeAllFilesHandler,
-    hasFilesToClear
+    hasFilesToClear,
+    selectedFormat,
+    handleFileFormat
   } = useConvertSettings();
 
   const isFormatSelected = !!selectedFormat;
@@ -34,7 +33,7 @@ export function ConvertSettings() {
         <p className="text-sm">Convert to</p>
         <div className="flex justify-between items-center gap-1">
           <div className="space-y-2">
-            <Select name="format" onValueChange={selectFormatHandler}>
+            <Select name="format" onValueChange={handleFileFormat}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select a format" />
               </SelectTrigger>

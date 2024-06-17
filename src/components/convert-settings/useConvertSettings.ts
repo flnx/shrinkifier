@@ -1,29 +1,34 @@
 import { useFilesContext } from '@/context/FilesContext';
 import { convertFile } from '@/data-access/convertFile';
 import { zipFiles } from '@/lib/utils';
-import { Format, Status } from '@/types/FileData';
+import { Status } from '@/types/FileData';
 import { saveAs } from 'file-saver';
 import { useToast } from '../ui/use-toast';
 
 export const useConvertSettings = () => {
-  const { files, handleFileStatus, addConvertedFileBlob, removeAllFilesHandler } = useFilesContext();
   const { toast } = useToast();
+
+  const {
+    files,
+    handleFileStatus,
+    addConvertedFileBlob,
+    removeAllFilesHandler,
+    handleFileFormat,
+    selectedFormat
+  } = useFilesContext();
 
   const submitFilesHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
     if (files.length === 0) return;
 
-    const formData = new FormData(e.currentTarget);
-    const format = formData.get('format') as Format;
-
     const promises = files
-      .filter((f) => f.fileData.status !== Status.COMPLETED)
+      .filter((f) => f.fileData.status !== Status.COMPLETED && f.convertedTo !== null)
       .map((f) => {
         handleFileStatus(f.fileData.name, Status.LOADING);
 
         const result = convertFile({
           file: f.blob,
-          selectedFormat: format,
+          selectedFormat: f.convertedTo!,
         })
           .then((blob) => {
             addConvertedFileBlob(f.fileData.name, blob);
@@ -40,10 +45,6 @@ export const useConvertSettings = () => {
     await Promise.allSettled(promises);
   };
 
-  const hasFilesToConvert = files.some(
-    (f) => f.fileData.status !== Status.COMPLETED
-  );
-
   const zipAndDownload = async () => {
     try {
       const zippedFiles = await zipFiles(files);
@@ -57,6 +58,7 @@ export const useConvertSettings = () => {
     }
   };
 
+  const hasFilesToConvert = files.some((f) => f.fileData.status !== Status.COMPLETED);
   const canZip = files.some((f) => f.convertedBlob);
   const isLoading = files.some((f) => f.fileData.status === Status.LOADING);
 
@@ -68,6 +70,8 @@ export const useConvertSettings = () => {
     canZip,
     zipAndDownload,
     removeAllFilesHandler,
-    hasFilesToClear: files.length !== 0
+    handleFileFormat,
+    selectedFormat,
+    hasFilesToClear: files.length !== 0,
   };
 };
