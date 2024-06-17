@@ -3,14 +3,17 @@ import { NextResponse } from 'next/server';
 import sharp from 'sharp';
 
 const FORMATS = ['PNG', 'JPEG', 'WEBP'];
-const TYPES = ['image/jpeg', 'image/png', 'image/gif'];
+const TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 export async function POST(req: Request) {
   const selectedFormat = req.headers.get('u-format') || '';
   const headers = req.headers.get('content-type') || '';
 
   try {
-    if (!FORMATS.includes(selectedFormat.toUpperCase()) || !TYPES.includes(headers)) {
+    if (
+      !FORMATS.includes(selectedFormat.toUpperCase()) ||
+      !TYPES.includes(headers)
+    ) {
       throw new Error('The requested format is not supported');
     }
 
@@ -26,13 +29,15 @@ export async function POST(req: Request) {
       }
 
       case Format.JPEG: {
-        newBuffer = await sharp(arrayBuffer).jpeg({ quality: 70 }).toBuffer();
+        newBuffer = await sharp(arrayBuffer)
+          .jpeg({ quality: 70, mozjpeg: true })
+          .toBuffer();
         break;
       }
 
       case Format.PNG: {
         newBuffer = await sharp(arrayBuffer)
-          .png({ quality: 70, compressionLevel: 8 })
+          .png({ quality: 70, compressionLevel: 9 })
           .toBuffer();
         break;
       }

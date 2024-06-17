@@ -22,6 +22,10 @@ export const convertFile = async ({
     },
   });
 
+  if (!res.ok) {
+    throw new Error('Something went wrong');
+  }
+
   const blob = await res.blob();
 
   return blob;
