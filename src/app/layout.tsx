@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import { cn } from '@/lib/utils';
@@ -13,8 +14,8 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "Shrinkifier - Free Image Optimizer & Compressor",
- description: 'Optimize and compress images for free with Shrinkifier. Fast and efficient conversion. Change image formats easily - PNG to WEBP, JPEG to WEBP, and more. Reduce image size effortlessly!'
+  title: 'Shrinkifier - Free Image Optimizer & Compressor',
+  description: 'Optimize and compress images for free with Shrinkifier. Fast and efficient conversion. Change image formats easily - PNG to WEBP, JPEG to WEBP, and more. Reduce image size effortlessly!',
 };
 
 type RootLayoutProps = Readonly<{
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Toaster />
           <Footer />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
