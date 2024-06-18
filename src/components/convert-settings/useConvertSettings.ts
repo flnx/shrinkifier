@@ -48,7 +48,7 @@ export const useConvertSettings = () => {
   const zipAndDownload = async () => {
     try {
       const zippedFiles = await zipFiles(files);
-      saveAs(zippedFiles, 'shrinkify.zip');
+      saveAs(zippedFiles, 'shrinkifier.zip');
     } catch (err) {
       toast({
         title: 'Failed to Zip Files',

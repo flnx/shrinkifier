@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from './providers';
 import { Nav } from '@/components/Nav';
 import { Toaster } from '@/components/ui/toaster';
-import '@/styles/globals.css';
 import { Footer } from '@/components/footer/Footer';
+import '@/styles/globals.css';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -13,8 +13,8 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "Shrinkify - Free Image Optimizer & Compressor",
- description: 'Optimize and compress images for free with Shrinkify. Fast and efficient conversion. Change image formats easily - PNG to WEBP, JPEG to WEBP, and more. Reduce image size effortlessly!'
+  title: "Shrinkifier - Free Image Optimizer & Compressor",
+ description: 'Optimize and compress images for free with Shrinkifier. Fast and efficient conversion. Change image formats easily - PNG to WEBP, JPEG to WEBP, and more. Reduce image size effortlessly!'
 };
 
 type RootLayoutProps = Readonly<{
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           disableTransitionOnChange
         >
           <Nav />

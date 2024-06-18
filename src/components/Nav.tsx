@@ -7,7 +7,7 @@ export function Nav() {
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link className="flex items-center gap-2" href="#">
           <MountainIcon className="h-6 w-6" />
-          <span className="text-lg font-bold">Shrinkify</span>
+          <span className="text-lg font-bold">Shrinkifier</span>
         </Link>
         <ThemeToggler />
       </div>

@@ -18,7 +18,7 @@ export const Footer = () => {
         </Link>
 
         <small className="mt-4 md:mt-0 text-tiny text-muted-foreground">
-          &copy; 2024 Shrinkify. All rights reserved.
+          &copy; 2024 Shrinkifier. All rights reserved.
         </small>
       </div>
     </footer>
