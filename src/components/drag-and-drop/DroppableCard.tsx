@@ -1,4 +1,10 @@
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card';
+import {
+  CardTitle,
+  CardDescription,
+  CardHeader,
+  CardContent,
+  Card,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '../ui/input';
 import { cn } from '@/lib/utils';
@@ -9,7 +15,10 @@ type DroppableCardProps = {
   handleDrop: (e: React.DragEvent) => void;
 };
 
-const DroppableCard = ({ handleOnSelectChange, handleDrop }: DroppableCardProps) => {
+const DroppableCard = ({
+  handleOnSelectChange,
+  handleDrop,
+}: DroppableCardProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isEntered, setIsEntered] = useState(false);
 
@@ -34,7 +43,9 @@ const DroppableCard = ({ handleOnSelectChange, handleDrop }: DroppableCardProps)
       <CloudUploadIcon className="w-16 h-16 text-zinc-500 dark:text-zinc-400" />
 
       <CardHeader>
-        <CardTitle>Drag and drop your images here</CardTitle>
+        <h1 className="font-semibold leading-none tracking-tight">
+          Drag and drop your images here
+        </h1>
         <CardDescription>Up to 20 images, 4 MB max each.</CardDescription>
       </CardHeader>
       <CardContent>

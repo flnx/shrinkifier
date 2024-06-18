@@ -13,9 +13,8 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: 'Shrinkify',
-  description:
-    'Convert different image formats. Optimize, crop, change aspect ratio and more',
+  title: "Shrinkify - Free Image Optimizer & Compressor",
+ description: 'Optimize and compress images for free with Shrinkify. Fast and efficient conversion. Change image formats easily - PNG to WEBP, JPEG to WEBP, and more. Reduce image size effortlessly!'
 };
 
 type RootLayoutProps = Readonly<{
@@ -26,7 +25,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-      className={cn(
+        className={cn(
           'min-h-screen bg-background font-sans antialiased flex flex-col',
           fontSans.variable
         )}
