@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getSize } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { FileData, Format, Status } from '@/types/FileData';
 import { ProgressBar } from '@/components/progress-bar/ProgressBar';
@@ -12,7 +12,7 @@ type SettingsTableProps = {
 };
 
 const ImageCardRow = ({ file, removeFileHandler }: SettingsTableProps) => {
-  const { fileData, convertedTo, convertedBlob } = file;
+  const { fileData, convertedTo, convertedBlob, blob } = file;
 
   const handleDownload = () => {
     if (!convertedBlob) return;
@@ -29,6 +29,11 @@ const ImageCardRow = ({ file, removeFileHandler }: SettingsTableProps) => {
     link.remove();
     URL.revokeObjectURL(blobUrl);
   };
+
+  console.log(blob);
+
+  const initialSize = getSize(Number(blob.size));
+  const afterConvertionSize = getSize(convertedBlob?.size || 0);
 
   return (
     <>
@@ -68,6 +73,18 @@ const ImageCardRow = ({ file, removeFileHandler }: SettingsTableProps) => {
             )}
             <div className="text-[11px] w-40 sm:w-[250px] md:w-auto max-w-screen-sm truncate">
               {fileData.ogName.replace(/\.(png|webp|jpg|jpeg)$/i, '')}
+            </div>
+
+            <div className="flex gap-1 items-center">
+              <p className="text-[11px] font-light">{initialSize}</p>
+              {convertedBlob && (
+                <>
+                  <ChevronRightIcon width={12} height={12} />
+                  <p className="text-[11px] font-light">
+                    {afterConvertionSize}
+                  </p>
+                </>
+              )}
             </div>
 
             <div className="h-3 flex items-center">

@@ -23,3 +23,24 @@ export async function zipFiles(files: FileData[]) {
   const zfiles = await zip.generateAsync({ type: 'blob' });
   return zfiles
 }
+
+export function getSize(sizeInBytes: number | null) {
+  if (!sizeInBytes || isNaN(sizeInBytes)) return null;
+
+  const sizeInKB = bytesToKB(sizeInBytes);
+
+  if (sizeInKB > 1000) {
+    const sizeInMB = bytesToMB(sizeInBytes);
+    return `${sizeInMB.toFixed(2)} MB`;
+  } else {
+    return `${sizeInKB.toFixed(2)} KB`;
+  }
+
+  function bytesToKB(bytes: number): number {
+    return bytes / 1024;
+  }
+
+  function bytesToMB(bytes: number): number {
+    return bytes / (1024 * 1024);
+  }
+}
