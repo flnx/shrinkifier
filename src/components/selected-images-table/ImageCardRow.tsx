@@ -30,8 +30,6 @@ const ImageCardRow = ({ file, removeFileHandler }: SettingsTableProps) => {
     URL.revokeObjectURL(blobUrl);
   };
 
-  console.log(blob);
-
   const initialSize = getSize(Number(blob.size));
   const afterConvertionSize = getSize(convertedBlob?.size || 0);
 
