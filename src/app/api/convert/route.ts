@@ -1,4 +1,4 @@
-import { resizeToMaxSize } from '@/lib/utils';
+import { resizeToMaxSize } from '@/lib/resizeToMaxSize';
 import { Format } from '@/types/FileData';
 import { NextResponse } from 'next/server';
 import sharp from 'sharp';
