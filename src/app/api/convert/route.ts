@@ -1,3 +1,4 @@
+import { resizeToMaxSize } from '@/lib/utils';
 import { Format } from '@/types/FileData';
 import { NextResponse } from 'next/server';
 import sharp from 'sharp';
@@ -48,7 +49,9 @@ export async function POST(req: Request) {
 
     const { width, height, size } = await sharp(newBuffer).metadata();
 
+    // Handles rare cases where conversion (e.g. JPEG to PNG) increases file size.
     if (size && width && height && size > 4 * 1024 * 1024) {
+      // Reduces dimensions by 10% recursively until the file is under 4MB as Vercel serverless limits file sizes to 4MB. It's not the best solution, and it will be improved in the near future.
       newBuffer = await resizeToMaxSize(newBuffer);
     }
 
@@ -61,27 +64,5 @@ export async function POST(req: Request) {
   } catch (err: unknown) {
     const eMsg = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ message: eMsg }, { status: 400 });
-  }
-}
-
-async function resizeToMaxSize(buffer: Buffer): Promise<Buffer> {
-  const metadata = await sharp(buffer).metadata();
-
-  const { width, height, size } = metadata;
-
-  if (size !== undefined && size > 4 * 1024 * 1024) {
-    // Reduce dimensions by 10%
-    const newWidth = Math.round((width || 0) * 0.9);
-    const newHeight = Math.round((height || 0) * 0.9);
-
-    const resizedBuffer = await sharp(buffer)
-      .resize(newWidth, newHeight)
-      .toBuffer();
-
-    // Recursively call resizeToMaxSize with the resized buffer
-    return await resizeToMaxSize(resizedBuffer);
-  } else {
-    // Return the buffer if it's within the size limit
-    return buffer;
   }
 }
