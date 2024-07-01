@@ -8,13 +8,14 @@ export const Footer = () => {
       <div className="container mx-auto flex items-center justify-between space-x-8">
         <Link
           href="https://github.com/flnx"
-          className="hover:opacity-80"
+          className="hover:opacity-80 flex flex-col items-center gap-2"
           prefetch={false}
           rel="noopener noreferrer"
           target="_blank"
         >
           <GithubIcon size={40} />
           <span className="sr-only">GitHub</span>
+          <span className="text-xs">Created By flnx</span>
         </Link>
 
         <small className="mt-4 md:mt-0 text-tiny text-muted-foreground">
